@@ -1,0 +1,8 @@
+<svg width="0" height="0" class="hidden">
+  <symbol fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" id="done">
+    <circle cx="5" cy="5" r="5" fill="#FF3B3B"></circle>
+  </symbol>
+  <symbol fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" id="notDone">
+    <circle cx="5" cy="5" r="5" fill="#21FF2A"></circle>
+  </symbol>
+</svg>
