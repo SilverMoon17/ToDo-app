@@ -1,5 +1,7 @@
-const addTask =document.querySelector('.add__task');
+window.addEventListener('DOMContentLoaded', () => {
+    const addTask = document.querySelector('.add__task');
 
-addTask.addEventListener('click', () => {
-    alert('Not ready yet!')ж
+    addTask.addEventListener('click', () => {
+        console.log('click');
+    });
 });
