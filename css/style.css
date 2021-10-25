@@ -11,14 +11,17 @@ body {
     padding-bottom: 1000px;
 }
 
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
 .header {
     background: linear-gradient(90deg, #316CB0 0.46%, rgba(132, 18, 134, 0.5) 100%);
     max-height: 60px;
-}
-
-a {
-    text-decoration: none;
-
 }
 
 .logo-text {
@@ -36,7 +39,7 @@ a {
     border-radius: 10px;
     max-width: 35%;
     margin: auto;
-    margin-top: 170px;
+    margin-top: 80px;
     padding-bottom: 120px;
 }
 
@@ -46,10 +49,11 @@ a {
     margin-left: 8px;
     margin-bottom: 28px;
     font-weight: bold;
-    font-size: 48px;
+    font-size: 3em;
     line-height: 56px;
     color: #FFFFFF;
 }
+
 .task__title.done {
     margin-top: 28px;
     margin-bottom: 20px;
@@ -66,6 +70,7 @@ a {
     margin-right: 5px;
     padding-top: 11px;
 }
+
 .task__text {
     font-weight: normal;
     font-size: 15px;
@@ -74,19 +79,54 @@ a {
     padding-bottom: 11px;
     padding-left: 4px;
 }
+
 .icon {
     margin-left: 5px;
+    margin-top: 2px;
 }
 
 .add__task {
-    position: absolute;
+    position: fixed;
+    z-index: 9999;
     background-color: transparent;
     background-image: url('../img/addTask.svg');
     height: 50px;
     width: 50px;
     outline: none;
     border: none;
-    right: 4px;
+    right: 15px;
     bottom: 10px;
     cursor: pointer;
+}
+
+.new__task {
+    background: #4A6B76;
+    border-radius: 6px;
+    margin-bottom: 7px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border: none;
+    outline: none;
+    color: white;
+    width: 98%;
+}
+
+.new__task::placeholder {
+    font-size: 15px;
+    line-height: 14px;
+    color: rgba(255, 255, 255, 0.6)
+}
+
+.save__btn {
+    outline: none;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    background-color: #07CA03;
+    padding: 3px 20px;
+    margin-left: 83.6%;
+    margin-bottom: 11px;
+}
+.btn__text {
+    color: white;
 }
