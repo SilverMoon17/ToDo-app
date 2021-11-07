@@ -23,17 +23,19 @@
         <div class="container">
             <div class="task__block">
                 <h1 class="task__title">Task List</h1>
-                <ul class="task__list">
-                    <div class="task__input hide">
-                        <li class="task">
-                            <img src="img/notDone.svg" class="icon" alt=""><input type="text" class="new__task"
-                                placeholder="Add new task">
-                        </li>
-                        <div class="add__btns">
-                            <button class="cancel__btn"><span class="btn__text">CANCEL</span></button>
-                            <button class="save__btn"><span class="btn__text">SAVE</span></button>
-                        </div>
+                <div class="task__input hide">
+                    <ul>
+                    <li class="task">
+                        <img src="img/notDone.svg" class="icon" alt=""><input type="text" class="new__task"
+                            placeholder="Add new task">
+                    </li>
+                    </ul>
+                    <div class="add__btns">
+                        <button class="cancel__btn"><span class="btn__text">CANCEL</span></button>
+                        <button class="save__btn"><span class="btn__text">SAVE</span></button>
                     </div>
+                </div>
+                <ul class="task__list">
                     <li class="task">
                         <img src="img/notDone.svg" class="icon" alt="">
                         <p class="task__text">Купить хлеб, яйца, молоко, кефир</p>
@@ -42,14 +44,14 @@
                         <img src="img/notDone.svg" class="icon" alt="">
                         <p class="task__text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi veniam sequi tempore velit ut, itaque quisquam doloribus inventore debitis aperiam ad sint. Alias adipisci ut, neque minima quas qui fugiat.</p>
                     </li>
-                    <li class="task">
+                    <!-- <li class="task">
                         <img src="img/notDone.svg" class="icon" alt="">
                         <p class="task__text">Купить хлеб, яйца, молоко, кефир</p>
                     </li>
                     <li class="task">
                         <img src="img/notDone.svg" class="icon" alt="">
                         <p class="task__text">Купить хлеб, яйца, молоко, кефир</p>
-                    </li>
+                    </li> -->
                 </ul>
                 <h1 class="task__title done">Done</h1>
                 <ul class="task__list">
