@@ -66,10 +66,6 @@ li {
 }
 
 .task {
-<<<<<<< HEAD
-    position: relative;
-=======
->>>>>>> 19b02977022966595f5fe7f39ee4ad4dce6bcb2a
     list-style: none;
     display: flex;
     align-items: flex-start;
@@ -81,15 +77,6 @@ li {
     padding-top: 11px;
 }
 
-<<<<<<< HEAD
-.task::after {
-    position: absolute;
-    content: 'sdfsda';
-    right: 0;
-}
-
-=======
->>>>>>> 19b02977022966595f5fe7f39ee4ad4dce6bcb2a
 .task__text {
     font-weight: normal;
     font-size: 15px;

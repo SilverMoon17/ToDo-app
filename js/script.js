@@ -6,21 +6,6 @@ window.addEventListener('DOMContentLoaded', (e) => {
           saveBtn = document.querySelector('.save__btn'),
           cancelBtn = document.querySelector('.cancel__btn'),
           newTaskInput = document.querySelector('.new__task'),
-<<<<<<< HEAD
-          icons = document.querySelectorAll('.icon');
-          
-
-          
-    function createTask(task) {
-        const li = document.createElement('li');
-        li.classList.add('task', 'not__done');
-        li.innerHTML = `
-        <img src="img/notDone.svg" class="icon" alt="">
-        <p class="task__text">${task}</p>
-        `;
-        taskList.prepend(li);
-    }
-=======
           icons = document.querySelectorAll('.icon'),
           emptyListTitle = document.querySelector('.empty__list-title');
 
@@ -49,15 +34,11 @@ window.addEventListener('DOMContentLoaded', (e) => {
             parent.append(li);
         });
     };
->>>>>>> 19b02977022966595f5fe7f39ee4ad4dce6bcb2a
 
     document.addEventListener('keyup', (e) => {
         if (taskInput.classList.contains('show') && e.key == 'Enter' && newTaskInput.value !== '') {
             createTask(newTaskInput.value);
-<<<<<<< HEAD
-=======
             createTaskList(tasksDB.tasks, taskList);
->>>>>>> 19b02977022966595f5fe7f39ee4ad4dce6bcb2a
             newTaskInput.value = '';
         } else if (e.key == 'Escape' && taskInput.classList.contains('show')) {
             taskInput.classList.remove('show');
@@ -66,28 +47,6 @@ window.addEventListener('DOMContentLoaded', (e) => {
         }
     });
 
-<<<<<<< HEAD
-    // tasks.forEach((task) => {
-    //     task.addEventListener('mouseenter', (e) => {
-    //         const target = e.target;
-    //        if (target.classList.contains('not__done')) {
-    //            target.children[0].src = 'img/done.svg';
-    //        }
-    //     });
-    //     task.addEventListener('mouseleave', (e) => {
-    //         const target = e.target;
-    //        if (target.classList.contains('not__done')) {
-    //            target.children[0].src = 'img/notDone.svg';
-    //        }
-    //     });
-    // });
-
-    // делегирование событий в списке задач 
-    
-    
-
-=======
->>>>>>> 19b02977022966595f5fe7f39ee4ad4dce6bcb2a
     taskList.addEventListener('mouseenter', e => {
         const target = e.target;    
         if (target.classList.contains('not__done')) {
@@ -100,7 +59,9 @@ window.addEventListener('DOMContentLoaded', (e) => {
         const target = e.target;
         console.log(target);
         if (target && target.classList.contains('icon')) {
-            target.parentElement.remove();
+            tasksDB.tasks.splice(target.parentNode.dataset.index, 1);
+            localStorage.removeItem('tasks');
+            createTaskList(tasksDB.tasks, taskList);
         }
     });
 
@@ -114,10 +75,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
     addTask.addEventListener('click', () => {
         if (taskInput.classList.contains('hide')) {
-<<<<<<< HEAD
-=======
             emptyListTitle.classList.add('hide');
->>>>>>> 19b02977022966595f5fe7f39ee4ad4dce6bcb2a
             taskInput.classList.remove('hide');
             taskInput.classList.add('show');
             newTaskInput.focus();
@@ -133,16 +91,16 @@ window.addEventListener('DOMContentLoaded', (e) => {
             taskInput.classList.add('hide');
         }
     });
-<<<<<<< HEAD
-=======
+    
+    console.log(localStorage.getItem('tasks'));
 
     if (localStorage.getItem('tasks')) {
+        emptyListTitle.classList.remove('show');
         emptyListTitle.classList.add('hide');
         tasksDB = JSON.parse(localStorage.getItem('tasks'));
         createTaskList(tasksDB.tasks, taskList);
     } else {
+        emptyListTitle.classList.remove('hide');
         emptyListTitle.classList.add('show');
     }
-        
->>>>>>> 19b02977022966595f5fe7f39ee4ad4dce6bcb2a
 });
