@@ -15,10 +15,13 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
     tasksDB = JSON.parse(localStorage.getItem('tasksDB')) || tasksDB;
 
+    const refreshLocalStrg = (object) => {
+        localStorage.setItem('tasksDB', JSON.stringify(object));
+    };
+
     const createTask = (task) => {
-        console.log(task);
         tasksDB.tasks.push(task);
-        localStorage.setItem('tasks', JSON.stringify(tasksDB));
+        localStorage.setItem('tasksDB', JSON.stringify(tasksDB));
     };
 
     const createTaskList = (tasks, parent) => {
@@ -57,11 +60,18 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
     taskList.addEventListener('click', e => {
         const target = e.target;
-        console.log(target);
         if (target && target.classList.contains('icon')) {
-            tasksDB.tasks.splice(target.parentNode.dataset.index, 1);
-            localStorage.removeItem('tasks');
-            createTaskList(tasksDB.tasks, taskList);
+            tasksDB.tasks.forEach((task, index) => {
+                if (task === target.parentElement.innerText) {
+                    tasksDB.tasks.splice(index, 1);
+                    refreshLocalStrg(tasksDB);
+                    createTaskList(tasksDB.tasks, taskList);       
+                }
+            });
+        }
+        if (JSON.parse(localStorage.getItem('tasksDB')).tasks.length === 0) {
+            emptyListTitle.classList.remove('hide');
+            emptyListTitle.classList.add('show');
         }
     });
 
@@ -75,6 +85,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
     addTask.addEventListener('click', () => {
         if (taskInput.classList.contains('hide')) {
+            emptyListTitle.classList.remove('show');
             emptyListTitle.classList.add('hide');
             taskInput.classList.remove('hide');
             taskInput.classList.add('show');
@@ -83,21 +94,26 @@ window.addEventListener('DOMContentLoaded', (e) => {
     });
     saveBtn.addEventListener('click', () => {
         createTask(newTaskInput.value);
+        createTaskList(tasksDB.tasks, taskList);
         newTaskInput.value = '';
+        newTaskInput.focus();
     });
     cancelBtn.addEventListener('click', () => {
         if (taskInput.classList.contains('show')) {
             taskInput.classList.remove('show');
             taskInput.classList.add('hide');
+            if (JSON.parse(localStorage.getItem('tasksDB')).tasks.length === 0) {
+                emptyListTitle.classList.remove('hide');
+                emptyListTitle.classList.add('show');
+            }
         }
     });
     
-    console.log(localStorage.getItem('tasks'));
 
-    if (localStorage.getItem('tasks')) {
+    if (JSON.parse(localStorage.getItem('tasksDB')).tasks.length != 0) {
         emptyListTitle.classList.remove('show');
         emptyListTitle.classList.add('hide');
-        tasksDB = JSON.parse(localStorage.getItem('tasks'));
+        tasksDB = JSON.parse(localStorage.getItem('tasksDB'));
         createTaskList(tasksDB.tasks, taskList);
     } else {
         emptyListTitle.classList.remove('hide');
