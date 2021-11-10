@@ -7,7 +7,9 @@ window.addEventListener('DOMContentLoaded', (e) => {
           cancelBtn = document.querySelector('.cancel__btn'),
           newTaskInput = document.querySelector('.new__task'),
           icons = document.querySelectorAll('.icon'),
-          emptyListTitle = document.querySelector('.empty__list-title');
+          emptyListTitle = document.querySelector('.empty__list-title'),
+          checkMarkIcon = document.querySelectorAll('.check__mark'),
+          trashIcon = document.querySelectorAll('.trash');
 
     let tasksDB = {
         tasks: []
@@ -33,6 +35,8 @@ window.addEventListener('DOMContentLoaded', (e) => {
             li.innerHTML = `
             <img src="img/notDone.svg" class="icon" alt="">
             <p class="task__text">${task}</p>
+            <img class="trash-icon hide" src="img/trash.svg" alt="">
+            <img class="check__mark-icon hide" src="img/checkMark.svg" alt="">
             `;
             parent.append(li);
         });
@@ -53,14 +57,17 @@ window.addEventListener('DOMContentLoaded', (e) => {
     taskList.addEventListener('mouseenter', e => {
         const target = e.target;    
         if (target.classList.contains('not__done')) {
-            target.children[0].src = 'img/done.svg';
             target.classList.add('hover');
+            target.children[2].classList.remove('hide');
+            target.children[2].classList.add('show');
+            target.children[3].classList.remove('hide');
+            target.children[3].classList.add('show');
         }
     },true);
 
     taskList.addEventListener('click', e => {
         const target = e.target;
-        if (target && target.classList.contains('icon')) {
+        if (target && target.classList.contains('trash-icon')) {
             tasksDB.tasks.forEach((task, index) => {
                 if (task === target.parentElement.innerText) {
                     tasksDB.tasks.splice(index, 1);
@@ -69,7 +76,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
                 }
             });
         }
-        if (JSON.parse(localStorage.getItem('tasksDB')).tasks.length === 0) {
+        if (JSON.parse(localStorage.getItem('tasksDB')).tasks.length === 0 && taskInput.classList.contains('hide')) {
             emptyListTitle.classList.remove('hide');
             emptyListTitle.classList.add('show');
         }
@@ -78,8 +85,11 @@ window.addEventListener('DOMContentLoaded', (e) => {
     taskList.addEventListener('mouseleave', e => {
         const target = e.target;    
         if (target.classList.contains('hover')) {
-            target.children[0].src = 'img/notDone.svg';
             target.classList.remove('hover');
+            target.children[2].classList.remove('show');
+            target.children[2].classList.add('hide');
+            target.children[3].classList.remove('show');
+            target.children[3].classList.add('hide');
         }
     },true);
 

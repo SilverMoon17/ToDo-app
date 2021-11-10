@@ -66,6 +66,7 @@ li {
 }
 
 .task {
+    position: relative;
     list-style: none;
     display: flex;
     align-items: flex-start;
@@ -77,6 +78,27 @@ li {
     padding-top: 11px;
 }
 
+.check__mark-icon {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+}
+
+.trash-icon {
+    position: absolute;
+    right: 40px;
+    top: 6px;
+}
+
+.check__mark-icon:hover {
+    cursor: pointer;
+    content: url("../img/checkMarkHover.svg")
+}
+.trash-icon:hover {
+    cursor: pointer;
+    content: url("../img/trashHover.svg")
+}
+
 .task__text {
     font-weight: normal;
     font-size: 15px;
@@ -84,6 +106,7 @@ li {
     color: #FFFFFF;
     padding-bottom: 11px;
     padding-left: 4px;
+    padding-right: 61px;
 }
 
 .icon {
