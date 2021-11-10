@@ -66,6 +66,7 @@ li {
 }
 
 .task {
+    position: relative;
     list-style: none;
     display: flex;
     align-items: flex-start;
@@ -75,6 +76,12 @@ li {
     margin-left: 5px;
     margin-right: 5px;
     padding-top: 11px;
+}
+
+.task::after {
+    position: absolute;
+    content: 'sdfsda';
+    right: 0;
 }
 
 .task__text {
