@@ -128,5 +128,6 @@ window.addEventListener('DOMContentLoaded', (e) => {
     } else {
         emptyListTitle.classList.remove('hide');
         emptyListTitle.classList.add('show');
+        
     }
 });
