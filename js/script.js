@@ -12,7 +12,8 @@ window.addEventListener('DOMContentLoaded', (e) => {
           trashIcon = document.querySelectorAll('.trash');
 
     let tasksDB = {
-        tasks: []
+        tasks: [],
+        completedTasks: []
     };
 
     tasksDB = JSON.parse(localStorage.getItem('tasksDB')) || tasksDB;
@@ -118,7 +119,6 @@ window.addEventListener('DOMContentLoaded', (e) => {
             }
         }
     });
-    
 
     if (JSON.parse(localStorage.getItem('tasksDB')).tasks.length != 0) {
         emptyListTitle.classList.remove('show');
