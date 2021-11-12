@@ -1,6 +1,8 @@
 window.addEventListener('DOMContentLoaded', (e) => {
     const addTask = document.querySelector('.add__task'),
           taskList = document.querySelector('.task__list'),
+          taskListDone = document.querySelector('.task__list-done'),
+          completedTasksBlock = document.querySelector('.completed__task-block'),
           tasks = document.querySelectorAll('.task'),
           taskInput = document.querySelector('.task__input'),
           saveBtn = document.querySelector('.save__btn'),
@@ -43,6 +45,36 @@ window.addEventListener('DOMContentLoaded', (e) => {
         });
     };
 
+    const createDoneTaskList = (tasks, parent) => {
+        parent.innerHTML = '';
+
+        tasks.forEach(task => {
+            const li = document.createElement('li');
+            li.classList.add('task', 'done');
+            li.innerHTML = `
+            <img src="img/done.svg" class="icon" alt="">
+            <p class="task__text">${task}</p>
+            <img class="trash-icon hide" src="img/trash.svg" alt="delete" style="right:10px;">
+            `;
+            parent.append(li);
+        });
+
+        // parent.innerHTML = '';
+
+        // tasks.forEach(task => {
+        //     const li = document.createElement('li');
+        //     li.classList.add('task', 'not__done');
+        //     li.innerHTML = `
+        //     <li class="task">
+        //     <img src="img/done.svg" class="icon" alt="">
+        //     <p class="task__text">${task}</p>
+        //     <img class="trash-icon hide" src="img/trash.svg" alt="">
+        // </li>
+        //     `;
+        //     parent.append(li);
+        // });
+    };
+
     document.addEventListener('keyup', (e) => {
         if (taskInput.classList.contains('show') && e.key == 'Enter' && newTaskInput.value !== '') {
             createTask(newTaskInput.value);
@@ -55,8 +87,43 @@ window.addEventListener('DOMContentLoaded', (e) => {
         }
     });
 
+    taskListDone.addEventListener('mouseenter', e => {
+        const target = e.target;
+        if (target.classList.contains('done')) {
+            target.classList.add('hover');
+            target.children[2].classList.remove('hide');
+            target.children[2].classList.add('show');
+        }
+    },true);
+
+    taskListDone.addEventListener('mouseleave', e => {
+        const target = e.target;
+        if (target.classList.contains('done')) {
+            target.classList.add('hover');
+            target.children[2].classList.remove('show');
+            target.children[2].classList.add('hide');
+        }
+    },true);
+    
+    taskListDone.addEventListener('click', e => {
+        const target = e.target;
+        if (target && target.classList.contains('trash-icon')) {
+            tasksDB.completedTasks.forEach((task, i) => {
+                if (task === target.parentElement.innerText) {
+                    tasksDB.completedTasks.splice(i, 1);
+                    refreshLocalStrg(tasksDB);
+                    createDoneTaskList(tasksDB.completedTasks, taskListDone);       
+                }
+                if (JSON.parse(localStorage.getItem('tasksDB')).completedTasks.length == 0) {
+                    completedTasksBlock.classList.remove('show');
+                    completedTasksBlock.classList.add('hide');
+                }    
+            });
+        }
+    });
+
     taskList.addEventListener('mouseenter', e => {
-        const target = e.target;    
+        const target = e.target;
         if (target.classList.contains('not__done')) {
             target.classList.add('hover');
             target.children[2].classList.remove('hide');
@@ -65,23 +132,6 @@ window.addEventListener('DOMContentLoaded', (e) => {
             target.children[3].classList.add('show');
         }
     },true);
-
-    taskList.addEventListener('click', e => {
-        const target = e.target;
-        if (target && target.classList.contains('trash-icon')) {
-            tasksDB.tasks.forEach((task, index) => {
-                if (task === target.parentElement.innerText) {
-                    tasksDB.tasks.splice(index, 1);
-                    refreshLocalStrg(tasksDB);
-                    createTaskList(tasksDB.tasks, taskList);       
-                }
-            });
-        }
-        if (JSON.parse(localStorage.getItem('tasksDB')).tasks.length === 0 && taskInput.classList.contains('hide')) {
-            emptyListTitle.classList.remove('hide');
-            emptyListTitle.classList.add('show');
-        }
-    });
 
     taskList.addEventListener('mouseleave', e => {
         const target = e.target;    
@@ -93,6 +143,38 @@ window.addEventListener('DOMContentLoaded', (e) => {
             target.children[3].classList.add('hide');
         }
     },true);
+
+
+    taskList.addEventListener('click', e => {
+        const target = e.target;
+        if (target && target.classList.contains('trash-icon')) {
+            tasksDB.tasks.forEach((task, index) => {
+                if (task === target.parentElement.innerText) {
+                    tasksDB.tasks.splice(index, 1);
+                    refreshLocalStrg(tasksDB);
+                    createTaskList(tasksDB.tasks, taskList);       
+                }
+            });
+        } else if (target && target.classList.contains('check__mark-icon')) {
+            tasksDB.tasks.forEach((task, index) => {
+                if (task === target.parentElement.innerText) {
+                    tasksDB.tasks.splice(index, 1);
+                    tasksDB.completedTasks.push(task);
+                    refreshLocalStrg(tasksDB);
+                    createTaskList(tasksDB.tasks, taskList);
+                    createDoneTaskList(tasksDB.completedTasks, taskListDone);
+                    if (JSON.parse(localStorage.getItem('tasksDB')).completedTasks.length != 0) {
+                        completedTasksBlock.classList.remove('hide');
+                        completedTasksBlock.classList.add('show');
+                    }
+                }
+            });
+        }
+        if (JSON.parse(localStorage.getItem('tasksDB')).tasks.length === 0 && taskInput.classList.contains('hide')) {
+            emptyListTitle.classList.remove('hide');
+            emptyListTitle.classList.add('show');
+        }
+    });
 
     addTask.addEventListener('click', () => {
         if (taskInput.classList.contains('hide')) {
@@ -128,6 +210,14 @@ window.addEventListener('DOMContentLoaded', (e) => {
     } else {
         emptyListTitle.classList.remove('hide');
         emptyListTitle.classList.add('show');
-        
+    }
+    if (JSON.parse(localStorage.getItem('tasksDB')).completedTasks.length != 0) {
+        completedTasksBlock.classList.remove('hide');
+        completedTasksBlock.classList.add('show');
+        createDoneTaskList(tasksDB.completedTasks, taskListDone);   
+    } else {
+        completedTasksBlock.classList.remove('show');
+        completedTasksBlock.classList.add('hide');
+
     }
 });
