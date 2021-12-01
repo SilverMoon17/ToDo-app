@@ -24,7 +24,7 @@ li {
     max-height: 60px;
 }
 .hide {
-    display: none;
+    display: none !important;
 }
 .show {
     display: block;
@@ -78,16 +78,20 @@ li {
     padding-top: 11px;
 }
 
-.check__mark-icon {
+.task__icons {
+    display: flex;
+    align-items: center;
     position: absolute;
     right: 10px;
     top: 5px;
 }
 
 .trash-icon {
-    position: absolute;
-    right: 40px;
-    top: 6px;
+    margin-right: 5px;
+}
+
+.edit-icon {
+    margin-right: 5px;
 }
 
 .check__mark-icon:hover {
@@ -97,6 +101,10 @@ li {
 .trash-icon:hover {
     cursor: pointer;
     content: url("../img/trashHover.svg")
+}
+.edit-icon:hover {
+    cursor: pointer;
+    content: url("../img/editHover.svg")
 }
 
 .task__text {
@@ -171,4 +179,33 @@ li {
 }
 .btn__text {
     color: white;
+}
+
+@media (max-width: 1024px) {
+    .task__block {
+        max-width: 80%;
+    }
+    .task__title {
+        font-size: 2em;
+        line-height: 40px;
+    }
+    .task__text {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .add__task {
+        right: 5px;
+        bottom: 5px;
+    }
+    .new__task {
+        width: 100%;
+    }
+    .add__btns {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .save__btn {
+        margin-bottom: 10px;
+    }
 }

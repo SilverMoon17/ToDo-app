@@ -8,6 +8,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
           saveBtn = document.querySelector('.save__btn'),
           cancelBtn = document.querySelector('.cancel__btn'),
           newTaskInput = document.querySelector('.new__task'),
+          taskIcons = document.querySelectorAll('.task__icons'),
           icons = document.querySelectorAll('.icon'),
           emptyListTitle = document.querySelector('.empty__list-title'),
           checkMarkIcon = document.querySelectorAll('.check__mark'),
@@ -36,10 +37,13 @@ window.addEventListener('DOMContentLoaded', (e) => {
             const li = document.createElement('li');
             li.classList.add('task', 'not__done');
             li.innerHTML = `
-            <img src="img/notDone.svg" class="icon" alt="">
-            <p class="task__text">${task}</p>
-            <img class="trash-icon hide" src="img/trash.svg" alt="">
-            <img class="check__mark-icon hide" src="img/checkMark.svg" alt="">
+                <img src="img/notDone.svg" class="icon" alt="">
+                <p class="task__text">${task}</p>
+                <div class="task__icons hide">
+                    <img class="edit-icon" src="img/edit.svg" alt="">
+                    <img class="trash-icon" src="img/trash.svg" alt="">
+                    <img class="check__mark-icon" src="img/checkMark.svg" alt="">
+                </div>
             `;
             parent.append(li);
         });
@@ -54,25 +58,12 @@ window.addEventListener('DOMContentLoaded', (e) => {
             li.innerHTML = `
             <img src="img/done.svg" class="icon" alt="">
             <p class="task__text">${task}</p>
-            <img class="trash-icon hide" src="img/trash.svg" alt="delete" style="right:10px;">
+            <div class="task__icons hide">
+                <img class="trash-icon" src="img/trash.svg" alt="">
+            </div>
             `;
             parent.append(li);
         });
-
-        // parent.innerHTML = '';
-
-        // tasks.forEach(task => {
-        //     const li = document.createElement('li');
-        //     li.classList.add('task', 'not__done');
-        //     li.innerHTML = `
-        //     <li class="task">
-        //     <img src="img/done.svg" class="icon" alt="">
-        //     <p class="task__text">${task}</p>
-        //     <img class="trash-icon hide" src="img/trash.svg" alt="">
-        // </li>
-        //     `;
-        //     parent.append(li);
-        // });
     };
 
     document.addEventListener('keyup', (e) => {
@@ -109,7 +100,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
         const target = e.target;
         if (target && target.classList.contains('trash-icon')) {
             tasksDB.completedTasks.forEach((task, i) => {
-                if (task === target.parentElement.innerText) {
+                if (task === target.closest('.task').children[1].innerText) {
                     tasksDB.completedTasks.splice(i, 1);
                     refreshLocalStrg(tasksDB);
                     createDoneTaskList(tasksDB.completedTasks, taskListDone);       
@@ -128,8 +119,6 @@ window.addEventListener('DOMContentLoaded', (e) => {
             target.classList.add('hover');
             target.children[2].classList.remove('hide');
             target.children[2].classList.add('show');
-            target.children[3].classList.remove('hide');
-            target.children[3].classList.add('show');
         }
     },true);
 
@@ -139,8 +128,6 @@ window.addEventListener('DOMContentLoaded', (e) => {
             target.classList.remove('hover');
             target.children[2].classList.remove('show');
             target.children[2].classList.add('hide');
-            target.children[3].classList.remove('show');
-            target.children[3].classList.add('hide');
         }
     },true);
 
@@ -149,7 +136,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
         const target = e.target;
         if (target && target.classList.contains('trash-icon')) {
             tasksDB.tasks.forEach((task, index) => {
-                if (task === target.parentElement.innerText) {
+                if (task === target.closest('.task').children[1].innerText) {
                     tasksDB.tasks.splice(index, 1);
                     refreshLocalStrg(tasksDB);
                     createTaskList(tasksDB.tasks, taskList);       
@@ -157,7 +144,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
             });
         } else if (target && target.classList.contains('check__mark-icon')) {
             tasksDB.tasks.forEach((task, index) => {
-                if (task === target.parentElement.innerText) {
+                if (task === target.closest('.task').children[1].innerText) {
                     tasksDB.tasks.splice(index, 1);
                     tasksDB.completedTasks.push(task);
                     refreshLocalStrg(tasksDB);
